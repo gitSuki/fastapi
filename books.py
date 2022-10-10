@@ -10,6 +10,14 @@ BOOKS = {
   'book_5' : {'title' : 'title_five', 'author' : 'authorfive'},
 }
 
-@app.get('/')
-async def read_all_books():
-  return  
+@app.get('/books/all')
+async def get_all_books():
+  return BOOKS
+
+@app.get('/books/my_book')
+async def get_favorite_book():
+  return {'book_title' : 'My favorite book'}
+
+@app.get('/books/{book_id}')
+async def get_book(book_id: int):
+  return {'book_title' :  book_id}
