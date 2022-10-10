@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import FastAPI
 from enum import Enum
 
@@ -8,11 +9,15 @@ BOOKS = {
   'book_2' : {'id' : 2, 'title' : 'title_two', 'author' : 'author_two'},
   'book_3' : {'id' : 3, 'title' : 'title_three', 'author' : 'author_three'},
   'book_4' : {'id' : 4, 'title' : 'title_four', 'author' : 'author_four'},
-  'book_5' : {'id' : 5, 'title' : 'title_five', 'author' : 'authorfive'},
+  'book_5' : {'id' : 5, 'title' : 'title_five', 'author' : 'author_five'},
 }
 
 @app.get('/books/all')
-async def get_all_books():
+async def get_all_books(skip_book: Optional[str] = None):
+  if skip_book: 
+    new_books = BOOKS.copy()
+    del new_books[skip_book]
+    return new_books
   return BOOKS
 
 @app.get('/books/{book_id}')
